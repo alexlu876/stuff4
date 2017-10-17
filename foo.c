@@ -13,26 +13,18 @@ struct node * free_list(struct node *);
 
 
 int main(){
-  struct node n1;
-  struct node * pn1 = &n1;
-  struct node n2;
-  struct node * pn2 = &n2;
-  struct node n3;
-  struct node * pn3 = &n3;
-  n1.i = 1;
-  n1.next = pn2;
-  n2.i = 2;
-  n2.next = pn3;
-  n3.i = 3;
-  n3.next = NULL;
+  struct node *in = NULL;
+  struct node *pn1 = insert_front(in, 1);
+  struct node * pn2 = insert_front(pn1, 2);
+  struct node * pn3 = insert_front(pn2, 3);
   printf("data of n1 = 1, pn1 = &n1\n");
   printf("data of n2 = 2, pn2 = &n2\n");
   printf("data of n3 = 3, pn3 = &n3\n");
   printf("testing: print_list(pn1)\n");
   printf("-----------------\n");
-  print_list(pn1);
+  print_list(pn3);
   printf("-----------------\n");
-  struct node * pn4 = insert_front(pn1, 4);
+  struct node * pn4 = insert_front(pn3, 4);
   printf("testing insert_front: adding a node with data value 4 to front, * pn4 = insert_front(pn1, 4)\n");
   printf("further testing: print_list(pn4):\n");
   printf("-----------------\n");
@@ -48,7 +40,7 @@ struct node * free_list(struct node * n){
   struct node * holder;
   if(n != NULL){
     next_kill = n->next;
-    n->next = NULL;
+    free(n);
     free_list(next_kill);
   }
   return holder;
